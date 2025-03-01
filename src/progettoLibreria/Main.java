@@ -1,9 +1,13 @@
 package progettoLibreria;
 
+import Gestione.gestoreLibri;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		gestoreLibri gestione = new gestoreLibri();
+		gestione.avvia();
 
 	}
 
