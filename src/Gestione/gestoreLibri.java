@@ -1,6 +1,7 @@
 package Gestione;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class gestoreLibri {
@@ -83,26 +84,27 @@ public class gestoreLibri {
 	}
 
 	private void eliminaLibro() {
-		boolean inputValido = false;
-		while (!inputValido) {
-			try {
-				System.out.println("Inserisci la matricola del libro da eliminare");
-				String matricolaDaEliminare = sc.nextLine();
-				int i = 0;
-				for (libri libro : Libri) {
-					libri libroDaEliminare = new libri();
-					libroDaEliminare.setMatricola(matricolaDaEliminare);
-					Libri.remove(libroDaEliminare);
-					System.out.println("Libro eliminato");
-					inputValido = true;
-				} i++;
-				
-			} catch (java.util.InputMismatchException e) {
-				System.out.println("nessuna matricola trovata");
-				sc.nextLine();
+		System.out.println("Inserisci la matricola del libro da eliminare");
+		String matricolaDaEliminare = sc.nextLine();
+		
+		boolean trovato = false;
+		
+		Iterator<libri> it = Libri.iterator();	//creaimo un iteratore per la lista
+		
+		while (it.hasNext()) {	//finche ci sono libri nella lista
+			libri libro = it.next(); //iteriamo il prossimo libro
+			if (libro.getMatricola().equals(matricolaDaEliminare)) {	//controlliamo che la matricola inserita sia uguale alla matricola da eliminare
+				it.remove();	//rimuoviamo il libro
+				trovato	= true;	//qui indichiamo che il libro è stato trovato
+				System.out.println("Libro eliminato");
+				break; //usciamo dal ciclo dopo aver eliminato il libro
 			}
 		}
 		
+		if (!trovato) {
+			System.out.println("Nessun libro trovato");
+			eliminaLibro();
+		}
 	}
 	
 	public void aggiungiLibro() {
